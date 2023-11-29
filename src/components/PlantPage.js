@@ -8,7 +8,7 @@ function PlantPage() {
   const [search, setSearch] = useState("")
 
   useEffect(() => {
-    fetch ('http://localhost:6001/plants')
+    fetch("http://localhost:6001/plants")
     .then((res) => res.json())
     .then((data) => setPlants(data))
   }, [])
@@ -17,19 +17,24 @@ function PlantPage() {
     setPlants([...plants, newPlant])
   }
 
-  function handleSearch(plant){
-    setSearch(plant)
+  function handleSearch(e){
+    setSearch(e.target.value)
   }
 
   const filteredPlants = plants.filter((p) => 
     p.name.toLowerCase().includes(search.toLowerCase())
-  );
+  )
 
   return (
     <main>
-      <NewPlantForm handleNewPlant={handleNewPlant}/>
-      <Search onSearch={handleSearch}/>
-      <PlantList plants={filteredPlants}/>
+      <NewPlantForm 
+        handleNewPlant={handleNewPlant}
+      />
+      <Search 
+        handleSearch={handleSearch}/>
+      <PlantList 
+        plants={filteredPlants}
+      />
     </main>
   );
 }

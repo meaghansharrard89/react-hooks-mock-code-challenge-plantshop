@@ -2,19 +2,21 @@ import React, { useState } from "react";
 
 function PlantCard( { plant } ) {
   const { name, image, price } = plant;
-  const [isClicked, setIsClicked] = useState(true);
+  const [isNotClicked, setAsClicked] = useState(true);
 
   function handleClick(){
-    setIsClicked((isClicked) => !isClicked);
+    setAsClicked((isNotClicked) => !isNotClicked)
   }
 
   return (
     <li className="card">
-      <img src={image} alt={"plant name"} />
+      <img src={image} alt={name} />
       <h4>{name}</h4>
       <p>Price: {price}</p>
-      {isClicked ? (
-        <button className="primary" onClick={handleClick}>In Stock</button>
+      {isNotClicked ? (
+        <button 
+          onClick={handleClick} 
+          className="primary">In Stock</button>
       ) : (
         <button>Out of Stock</button>
       )}
