@@ -5,7 +5,7 @@ import Search from "./Search";
 
 function PlantPage() {
   const [plants, setPlants] = useState([]);
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:6001/plants")
@@ -25,6 +25,26 @@ function PlantPage() {
     p.name.toLowerCase().includes(search.toLowerCase())
   )
 
+  function handleDelete(id){
+    fetch(`http://localhost:6001/plants/${id}`, {
+      method: "DELETE"
+    })
+    .then(() => {
+      setPlants(plants.filter(item => item.id != id))
+  })
+}
+
+function handleUpdatePrice(updatedPlant) {
+  setPlants((plant) => {
+    return plant.map((p) => {
+      if (p.id === updatedPlant.id) {
+        return { ...p, price: updatedPlant.price };
+      }
+      return p;
+    });
+  });
+}
+
   return (
     <main>
       <NewPlantForm 
@@ -34,6 +54,8 @@ function PlantPage() {
         handleSearch={handleSearch}/>
       <PlantList 
         plants={filteredPlants}
+        handleDelete={handleDelete}
+        handleUpdatePrice={handleUpdatePrice}
       />
     </main>
   );
